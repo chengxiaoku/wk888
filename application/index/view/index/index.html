@@ -1,0 +1,895 @@
+{include file="public/header"}
+{include file="public/menu"}
+{include file="public/nav"}
+<!-- 引入打印资源文件-->
+<script language="javascript" src="__ROOT__/static/admin/js/LodopFuncs.js"></script>  
+<!-- 调用LODOP控件代码-->  
+<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>  
+  <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop.exe"></embed>  
+</object> 
+<!-- 因为datalist下拉没有长度限制故用脚本解决 需要引入两个文件-->
+<style type="text/css">
+    .remove{
+        margin-right:10px !important;
+        cursor:pointer;
+    }
+</style>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+
+                        <div class="alert alert-block alert-success">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="icon-remove"></i>
+                            </button>
+
+                            <i class="icon-ok green"></i>
+
+                            欢迎使用
+                            <strong class="green">
+                                {$Think.session.adminuser}后台管理系统
+                                <small>(v1.0)</small>
+                            </strong>
+                            采用最新框架技术，安全可靠.
+                        </div>
+
+                        <div class="row">
+                            <div class="space-6"></div>
+
+                            <div class="col-sm-12 infobox-container">
+                                <div class="infobox infobox-green  ">
+                                    <div class="infobox-icon">
+                                        <i class="icon-comments"></i>
+                                    </div>
+
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number">{$useradd}</span>
+                                        <div class="infobox-content">会员人数</div>
+                                    </div>
+                                    <!--<div class="stat stat-success">8%</div>-->
+                                </div>
+
+                                <div class="infobox infobox-blue  ">
+                                    <div class="infobox-icon">
+                                        <i class="icon-twitter"></i>
+                                    </div>
+
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number">{$projectcount}</span>
+                                        <div class="infobox-content">项目种类</div>
+                                    </div>
+                                <!--
+                                    <div class="badge badge-success">
+                                        +32%
+                                        <i class="icon-arrow-up"></i>
+                                    </div>
+                                    -->
+                                </div>
+
+                                <div class="infobox infobox-pink  ">
+                                    <div class="infobox-icon">
+                                        <i class="icon-shopping-cart"></i>
+                                    </div>
+
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number">{$fundscount}</span>
+                                        <div class="infobox-content">交易总次数</div>
+                                    </div>
+                                    <!--<div class="stat stat-important">4%</div>-->
+                                </div>
+
+                                <div class="infobox infobox-red  ">
+
+                                    <div class="infobox-chart">
+                                        <span class="sparkline" data-values="196,128,202,177,154,94,100,170,224"></span>
+                                    </div>
+
+                                    <div class="infobox-data">
+                                        <span class="infobox-data-number">优</span>
+                                        <div class="infobox-content">系统性能</div>
+                                    </div>
+
+                                    <div class="badge badge-success">
+                                        8.6
+                                        <i class="icon-arrow-up"></i>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="space-6"></div>
+
+                                <div onclick="consume()" class="infobox infobox-grey infobox-small infobox-dark" style="background: #ff5f63; cursor: pointer">
+                                    <div class="infobox-icon">
+                                        <i class="icon-download-alt"></i>
+                                    </div>
+
+                                    <div class="infobox-data">
+                                        <div class="infobox-content">消费</div>
+                                        <div class="infobox-content"><!--￥{$typemoney[1]['type']}--></div>
+                                    </div>
+                                </div>
+                                <div onclick="xf()" class="infobox infobox-grey infobox-small infobox-dark" style=" background: #cf98ff;cursor: pointer">
+                                    <div class="infobox-icon">
+                                        <i class="icon-beaker"></i>
+                                    </div>
+
+                                    <div class="infobox-data">
+                                        <div class="infobox-content">充值</div>
+                                        <div class="infobox-content"><!--￥{$typemoney[0]['type']}--></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="vspace-sm"></div>
+
+                        </div><!-- /row -->
+
+                        <div class="hr hr32 hr-dotted"></div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="widget-box transparent">
+                                    <div class="widget-header widget-header-flat">
+                                        <h4 class="lighter">
+                                            <i class="icon-star orange"></i>
+                                            最近交易记录
+                                        </h4>
+
+                                        <div class="widget-toolbar">
+                                            <a href="#" data-action="collapse">
+                                                <i class="icon-chevron-up"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main no-padding">
+                                            <table class="table table-bordered table-striped">
+                                                <thead class="thin-border-bottom">
+                                                <tr>
+                                                    <th>
+                                                        <i class="icon-caret-right blue"></i>
+                                                        username(tel)
+                                                    </th>
+
+                                                    <th>
+                                                        <i class="icon-caret-right blue"></i>
+                                                        price
+                                                    </th>
+
+                                                    <th>
+                                                        <i class="icon-caret-right blue"></i>
+                                                        transaction type
+                                                    </th>
+                                                    <th>
+                                                        <i class="icon-caret-right blue"></i>
+                                                        transaction time
+                                                    </th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                {volist name="fundsdata" id="vo"}
+                                                <tr>
+                                                    <td>{$vo.name}({$vo.iphone})</td>
+
+                                                    <td>
+                                                        <!--<small>
+                                                            <s class="red">$29.99</s>
+                                                        </small>-->
+                                                        <b class="green">￥{$vo.money}</b>
+                                                    </td>
+
+                                                    <td class="hidden-480">
+                                                        {if condition="$vo.type eq 1"}
+                                                            <span class="label label-danger arrowed">消费</span>
+                                                        {else/}
+                                                            <span class="label label-success arrowed-in arrowed-in-right">充值</span>
+                                                        {/if}
+                                                    </td>
+                                                    <td>{$vo.createtime|date="Y-m-d H:i:s",###}</td>
+                                                </tr>
+                                                {/volist}
+
+
+                                                </tbody>
+                                            </table>
+                                        </div><!-- /widget-main -->
+                                    </div><!-- /widget-body -->
+                                </div><!-- /widget-box -->
+                            </div>
+
+                        </div><!-- /row -->
+                        <div class="hr hr32 hr-dotted"></div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+
+                                <div id="echarts1" style="height:400px"></div>
+                            </div>
+                            <div class="col-sm-6">
+
+                                <div id="echarts2" style="height:400px"></div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="hr hr32 hr-dotted"></div>
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+
+<!-- 消费模态框 -->
+
+<div class="modal fade" id="consume" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">消费系统</h4>
+            </div>
+            <form method="post" id="consume1" autocomplete="off">
+                <div class="modal-body" >
+
+                    <div class="form-group" >
+                        <label for="recipient-name" class="control-label">客户手机号<span style="color: red">*</span>:</label>
+                        <input type="text" name="name" list="fruit" onchange="iputselect(this)" onkeyup="this.value=this.value.replace(/\s+/g,'')"  class="form-control width-80"  id="recipient-name" placeholder="请输入手机号" autocomplete="off">
+                        <a class="btn btn-primary" href="#" id="useradd" style="float: right; position:relative; top: -40px">搜索</a>
+                        <div style="clear: both"></div>
+                        <div id="errorshow" style="display: none;"><h3 style="color: red">未找到用户信息，请重新查找</h3></div>
+                        <table class="table table-hover" style="display: none" id="consumeselect">
+                            <thead>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>手机号</th>
+                                    <!--<th>住址</th>-->
+                                    <th>会员等级</th>
+                                    <th>账户余额</th>
+                                    <th>添加时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="name"></td>
+                                    <td id="iphone"></td>
+                                    <!--<td id="address"></td>-->
+                                    <td id="le"></td>
+                                    <td id="money"></td>
+                                    <td id="creattime"></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <datalist id="fruit">
+                            {volist name='dataiphone' id='vo'}
+                                <option class="usermeg" value="{$vo.iphone}" pid="{$vo.id}">{$vo.iphone}</option>
+                            {/volist}
+
+                        </datalist>
+                    </div>
+                    <div class="form-group" >
+                        <label for="recipient-typeid" class="control-label">消费项目<span style="color: red">*</span>:</label>
+                        <select class="form-control width-30" name="typeid" id="recipient-typeid" onchange="selectconsume(this)">
+                            {volist name='data' id='vo'}
+                            <option class="selectproject" value="{$vo.id}" money="{$vo.money}">{$vo.name}(￥{$vo.money})</option>
+                            {/volist}
+
+                        </select>
+                       <!--<a class="btn btn-primary" href="#" style="float: right; position:relative; top: -40px">选定</a>-->
+                        <div style="clear: both; margin-bottom: 15px;"></div>
+                        消费项:<div id="projectcontent">
+                                <span class='label label-success arrowed-in arrowed-in-right remove' id="start">
+
+                                </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <span style="float: left">用户余额:￥
+                        <span id="usermoney" style="color: red; font-weight: bold; margin-right: 15px;">0</span>
+                        消费金额:<span id="zzmoney" style="color: red;"> </span><i style="margin-left:8px ;margin-right: 8px">*</i><span id="zk" style="color: #ffc265">0</span>%
+                        =<input type="number" placeholder="0.00" style="color: #ff0000; font-size: 18px; font-weight: bold; width: 80px;" id="jg">
+                    </span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="subbtn">消费</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 充值模态框 -->
+
+<div class="modal fade" id="consumexf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabelxf">充值系统</h4>
+            </div>
+            <form method="post" id="consume1xf"  autocomplete="off">
+                <div class="modal-body" >
+
+                    <div class="form-group" >
+                        <label for="recipient-name" class="control-label">客户手机号<span style="color: red">*</span>:</label>
+                        <input type="text" name="name" list="fruit" onchange="iputselect1(this)" onkeyup="this.value=this.value.replace(/\s+/g,'')"  class="form-control width-80"  id="recipient-namexf" placeholder="请输入手机号" autocomplete="off">
+                        <a class="btn btn-primary" href="#" id="useraddxf" style="float: right; position:relative; top: -40px">搜索</a>
+                        <div style="clear: both"></div>
+                        <div id="errorshowxf" style="display: none;"><h3 style="color: red">未找到用户信息，请重新查找</h3></div>
+                        <table class="table table-hover" style="display: none" id="consumeselectxf">
+                            <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>手机号</th>
+                                <!--<th>住址</th>-->
+                                <th>会员等级</th>
+                                <th>账户余额</th>
+                                <th>添加时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="namexf"></td>
+                                <td id="iphonexf"></td>
+                                <!--<td id="address"></td>-->
+                                <td id="levelxf"></td>
+                                <td id="moneyxf"></td>
+                                <td id="creattimexf"></td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                        <datalist id="fruitxf">
+                            {volist name='dataiphone' id='vo'}
+                            <option class="usermeg" value="{$vo.iphone}" pid="{$vo.id}">{$vo.iphone}</option>
+                            {/volist}
+
+                        </datalist>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <span style="float: left"><label style="margin-right: 10px;font-weight: bold">请输入充值金额（￥）:</label><input type="number" name="name" placeholder="0~10000" id="addmoney"></span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="subbtnxf">充值</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--<strike>   打印小票的中间线 -->
+{include file="public/set"}
+<script src="__ROOT__/static/admin/js/echarts-2.2.7/build/dist/echarts.js"></script>
+<script type="text/javascript">
+    var clf_money = 0; //消费时的原价金额
+    function get_type_num(json1){
+        var myArray=new Array()
+        for (var i =0; i<json1.length;i++){
+            myArray[i] = json1[i]['name']
+        }
+        return myArray;
+    }
+    myArray1 = new Array();
+    myArray2 = new Array();
+    function getmoney(json3){
+        var json1 = JSON.parse(json3);
+        for(var i in json1){
+            myArray1[i] =json1[i].money;
+            myArray2[i] =json1[i].time;
+           // myArray1[0][j] = json1[i].money;
+            //myArray1[1][j] = json1[i].time;
+        }
+    }
+    getmoneyarr = getmoney('{$getmoney}');
+    //echarts
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: '__ROOT__/static/admin/js/echarts-2.2.7/build/dist'
+        }
+    });
+
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/pie', // 使用饼状图就加载bar模块，按需加载
+                'echarts/chart/funnel',
+                'echarts/chart/wordCloud',
+                //'echarts/chart/line',
+                //'echarts/chart/stack',
+                //'echarts/chart/tiled',
+                //'echarts/chart/force',
+                //'echarts/chart/chord',
+                // 'echarts/chart/bar',
+                //'echarts/chart/funnel'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('echarts1'));
+
+                var option = {
+                    title : {
+                        text: '会员类型分析图',
+                        subtext: '来自系统数据',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'vertical',
+                        x : 'left',
+                        data:get_type_num({$usertype})
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    series : [
+                        {
+                            name:'访问来源',
+                            type:'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:{$usertype}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+    );
+
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('echarts2'));
+
+                var option = {
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['金额(￥)']
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : myArray2
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"近五个月充值金额(￥)",
+                            "type":"bar",
+                            "data":myArray1
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+    );
+
+
+
+    projectarr = [];
+    $(function(){
+        $("#subbtn").attr("disabled","disabled");
+        $("#subbtnxf").attr("disabled","disabled");
+        var first = $(".selectproject").eq(0);
+        $("#start").text(first.text());
+        $("#start").attr('pid',first.val());
+        $("#zzmoney").text(first.attr('money'));
+        $("#jg").val(0);
+        projectarr.push(first.val());
+    });
+    //消费
+    function consume(){
+        $('#consume').modal();
+    }
+    //充值
+    function xf(){
+        $('#consumexf').modal();
+    }
+
+    //模态框被关闭时  表单信息重置
+    $('#consume').on('hidden.bs.modal', function (e) {
+        var first = $(".selectproject").eq(0);
+        $("#zzmoney").text(first.attr('money'));
+        projectarr = [];
+        projectarr.push(first.val());
+        // do something...
+        document.getElementById("consume1").reset();
+        //用户信息隐藏
+        $("#consumeselect").hide();
+        $("#errorshow").hide();
+        userid = -1;
+        $("#projectcontent").html("<span class='label label-success arrowed-in arrowed-in-right remove' pid="+first.val()+" id='start'> "+$(".selectproject").eq(0).text()+"</span>");
+        $("#zzmoney").text($(".selectproject").eq(0).attr('money'));
+        $("#usermoney").text(0);
+        $("#zk").text(0);
+        $("#jg").val(0);
+        $("#subbtn").attr("disabled","disabled");
+    });
+    //消费用户ID
+    userid = -1;
+    var newDate = new Date();
+    function iputselect(obj){
+        $.get('{:url("index/consume")}',{iphone:$(obj).val()},function(data){
+            if(data == 2){
+                userid = -1;
+                $("#errorshow").show();
+                $("#consumeselect").hide();
+                $("#usermoney").text(0);
+                $("#zk").text(0);
+                $("#jg").val(0);
+                $("#subbtn").attr("disabled","disabled");
+            }else{
+                $("#subbtn").removeAttr("disabled");
+                data = JSON.parse(data);
+                    userid = data[0].id;
+                    $("#name").text(data[0].name);
+                    $("#iphone").text(data[0].iphone);
+                    $("#address").text(data[0].adress);
+                    //$("#level").text(data[0].level+"("+data[0].discount+"%)");
+					$("#le").text(data[0].level+"("+data[0].discount+"%)");
+                    $("#money").text(data[0].money);
+                    newDate.setTime(parseInt(data[0].createtime)* 1000);
+                    $("#creattime").text(newDate.toLocaleString());
+                    $("#consumeselect").show();
+                    $("#errorshow").hide();
+                $("#usermoney").text(data[0].money);
+                $("#zk").text(data[0].discount);
+                var jg_num2 = (parseInt($("#zk").text())/100)*parseFloat($("#zzmoney").text())
+                $("#jg").val(jg_num2);
+                jisuan(userid,projectarr);
+            }
+
+        });
+    }
+    projectid = 0;
+
+    str1 = "</span>";
+
+    function selectconsume(obj){
+        projectid = $(obj).val();
+        for(var i =0;i<projectarr.length;i++){
+            if(parseInt(projectid) == parseInt(projectarr[i])){
+                layer.msg('请勿重复添加', {
+                    icon: 5
+                });
+                return false;
+            }
+        }
+        projectarr.push(projectid);
+        var content = $(".selectproject[value="+projectid+"]").text();
+        $("#projectcontent").append("<span class='label label-success arrowed-in arrowed-in-right remove' pid ="+projectid+">"+content+str1);
+        jisuan(userid,projectarr);
+    }
+    Array.prototype.removeByValue = function(val) {
+        for(var i=0; i<this.length; i++) {
+            if(this[i] == val) {
+                this.splice(i, 1);
+                break;
+            }
+        }
+    };
+
+    $(document).on('click',".remove",function(){
+        layer.msg('删除成功', {
+            icon: 6
+        });
+        projectarr.removeByValue($(this).attr('pid'));
+        $(this).remove();
+        jisuan(userid,projectarr);
+    });
+    //计算消费金额
+    function jisuan(userid,arr){
+
+        if(userid == -1){
+            layer.msg('请选择用户', {
+                icon: 5
+            });
+            return false;
+        }
+
+        var userstr = '';
+
+        for(var i =0;i<arr.length;i++){
+            userstr += arr[i]+',';
+        }
+        //console.log(arr);
+        $.get("{:url('index/priceshow')}",{uid:userid,ustr:userstr.substr(0,userstr.length-1)},function(data1){
+            if(data1 != 2){
+                $("#zzmoney").text(data1);
+            }else{
+                layer.msg('请选择消费项目', {
+                    icon: 5
+                });
+                $("#zzmoney").text(0);
+            }
+            var jg_num1 = (parseInt($("#zk").text())/100)*parseFloat($("#zzmoney").text());
+            $("#jg").val(jg_num1);
+        });
+    }
+    //进行消费动作
+    $("#subbtn").on("click",function(){
+        if(userid == -1){
+            layer.msg('出现了问题，请刷新', {
+                icon: 5
+            });
+            return false;
+        }
+        if(projectarr.length == 0){
+            layer.msg('请选择消费项目', {
+                icon: 5
+            });
+            return false;
+        }
+        if(parseFloat($("#usermoney").text()) < parseFloat($("#jg").val())){
+            layer.msg('扣款失败,账户余额不足', {
+                icon: 5
+            });
+            return false;
+        }
+        var str1 = '';
+        for(var i =0;i<projectarr.length;i++){
+            str1 += projectarr[i]+',';
+        }
+
+        //$.post("{:url('index/priceshow')}",{uid:userid,str:str1.substr(0,str1.length-1)},function(data){
+        $.post("{:url('index/priceshow')}",{uid:userid,money:$("#jg").val()},function(data){
+            if (data['success']) {
+                layer.alert(data['info'], function (data) {
+                    window.location.reload();//页面刷新
+                    layer.closeAll();
+                    $('#consume').modal('hide');
+                });
+            } else {
+                layer.msg(data['info'], {
+                    icon: 5
+                });
+            }
+        });
+		 /**
+	 *获取当前消费项目
+	 */
+	 myarray = new Array();
+	 $(".remove").each(function(){
+		var person = new Object();
+		person.name = $(this).text();
+		//person.price = 100;
+		person.count = 1;
+		//person.total = 10.08;
+		myarray.push(person);
+	 });
+		name_val = $("#name").text();
+		iphone_val = $("#iphone").text();
+		zzmoney_val = $("#zzmoney").text();
+		jg = $("#jg").val();
+
+        //计算真时的原价金额
+        clf_money =(parseInt($("#zk").text())/100)*parseFloat($("#zzmoney").text());
+
+
+        //调用打印动作
+		printOrder();
+		//调用打印动作
+		 window.setTimeout(function (){
+			printOrder();
+		 },4000);
+		
+		//预览
+		//printPreview();
+        return false;
+
+    });
+    xfid = -1;
+    function iputselect1(obj){
+        $.get('{:url("index/consume")}',{iphone:$(obj).val()},function(data){
+            if(data == 2){
+                $("#errorshowxf").show();
+                $("#consumeselectxf").hide();
+
+                $("#subbtnxf").attr("disabled","disabled");
+            }else{
+                $("#subbtn").removeAttr("disabled");
+                data = JSON.parse(data);
+                xfid = data[0].id;
+                $("#namexf").text(data[0].name);
+                $("#iphonexf").text(data[0].iphone);
+                <!-- $("#address").text(data[0].adress);-->
+                $("#levelxf").text(data[0].level+"("+data[0].discount+"%)");
+                $("#moneyxf").text(data[0].money);
+                newDate.setTime(parseInt(data[0].createtime)* 1000);
+                $("#creattimexf").text(newDate.toLocaleString());
+                $("#consumeselectxf").show();
+                $("#errorshowxf").hide();
+                $("#subbtnxf").removeAttr("disabled");
+            }
+        });
+    }
+    $('#consumexf').on('hidden.bs.modal', function (e) {
+        document.getElementById("consume1xf").reset();
+        //用户信息隐藏
+        $("#consumeselectxf").hide();
+        $("#errorshowxf").hide();
+        xfid = -1;
+        $("#subbtnxf").attr("disabled","disabled");
+    });
+    $("#subbtnxf").on("click",function(){
+        if(xfid == -1){
+            layer.msg("请选择要充值的会员", {
+                icon: 5
+            });
+            return false;
+        }else{
+		
+            $.post("{:url('index/addmoney')}",{uid:xfid,money:$("#addmoney").val()},function(data){
+                if (data['success']) {
+                    layer.alert(data['info'], function (data) {
+                        window.location.reload();//页面刷新
+                        $('#consumexf').modal('hide');
+                    });
+                } else {
+                    layer.msg(data['info'], {
+                        icon: 5
+                    });
+                }
+            })
+        }
+    })
+</script>
+<script language="javascript" type="text/javascript">   
+/**打印机代码
+*/
+        var LODOP; //声明为全局变量  
+        function printPreview(){  
+                //创建小票打印页  
+        CreatePrintPage();  
+        //打印预览  
+        LODOP.PREVIEW();      
+            }  
+        /**  
+        * 样例函数,服务器确认订单后执行  
+        */  
+    function printOrder() {  
+              
+        //创建小票打印页  
+        CreatePrintPage();  
+        //开始打印  
+        LODOP.PRINT();    
+          
+    };            
+    function CreatePrintPage(json) {  
+	//获取当前时间
+	     var date = new Date();
+		 var year = date.getFullYear();
+		 var mon = date.getMonth()+1;
+		 var da = date.getDate();
+		 var h = date.getHours();
+		 var m = date.getMinutes();
+		 var s = date.getSeconds();
+	
+	 
+	
+        //json 创建模拟服务器响应的订单信息对象  
+        var json = {"title":"康宝堂中医推拿馆", "name":name_val, "phone": iphone_val, "orderTime":mon+"月"+da+"日"+" "+h+"点"+m+"分"+s+"秒",   
+         "shop":"郏县行政路东段)", "total":zzmoney_val,"totalCount":myarray.length,  
+        "goodsList":myarray,//[ 
+      //{"name":"菜心(无公害食品)", "price":5.00, "count":1, "total":10.08}, ]  
+        }   
+//"orderNo": "20122157481315",		
+        var hPos=10,//小票上边距  
+        pageWidth=580,//小票宽度  
+        rowHeight=15,//小票行距  
+        //获取控件对象  
+        LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));   
+        //初始化   
+        LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_名片");  
+        //添加小票标题文本  
+        LODOP.ADD_PRINT_TEXT(hPos,30,pageWidth,rowHeight,json.title);  
+        //上边距往下移  
+        hPos+=rowHeight;  
+          
+        LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight,"姓名:");  
+        LODOP.ADD_PRINT_TEXT(hPos,30,pageWidth,rowHeight,json.name);  
+        //hPos+=rowHeight; //电话不换行  
+        LODOP.ADD_PRINT_TEXT(hPos,70,pageWidth,rowHeight,"电话:");  
+        LODOP.ADD_PRINT_TEXT(hPos,100,pageWidth,rowHeight,json.phone);  
+        hPos+=rowHeight;  
+        LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight,"下单时间:");  
+        LODOP.ADD_PRINT_TEXT(hPos,60,pageWidth,rowHeight,json.orderTime);  
+        hPos+=rowHeight;  
+        /*LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight,"订单编号:");  
+        LODOP.ADD_PRINT_TEXT(hPos,60,pageWidth,rowHeight,json.orderNo);  
+        hPos+=rowHeight;*/  
+        LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight,"门店地址:");  
+        LODOP.ADD_PRINT_TEXT(hPos,60,pageWidth,rowHeight,json.shop);  
+        hPos+=rowHeight;  
+        LODOP.ADD_PRINT_LINE(hPos,2, hPos, pageWidth,2, 1);  
+        hPos+=5;  
+        LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight,"服务名称");  
+        //LODOP.ADD_PRINT_TEXT(hPos,70,pageWidth,rowHeight,"单价");  
+        LODOP.ADD_PRINT_TEXT(hPos,120,pageWidth,rowHeight,"数量");  
+        //LODOP.ADD_PRINT_TEXT(hPos,150,pageWidth,rowHeight,"小计");  
+        hPos+=rowHeight;  
+        //遍历json的商品数组  
+        for(var i=0;i<json.goodsList.length;i++){  
+              
+            if(json.goodsList[i].name.length<4){  
+                LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight,json.goodsList[i].name);  
+            }else {  
+                //商品名字过长,其他字段需要换行  
+                LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight,json.goodsList[i].name);  
+                //hPos+=rowHeight;  
+            }  
+            //LODOP.ADD_PRINT_TEXT(hPos,70,pageWidth,rowHeight,json.goodsList[i].price);  
+            LODOP.ADD_PRINT_TEXT(hPos,115,pageWidth,rowHeight,json.goodsList[i].count);  
+            //LODOP.ADD_PRINT_TEXT(hPos,140,pageWidth,rowHeight,json.goodsList[i].total);  
+            hPos+=rowHeight;  
+            }  
+        //商品遍历打印完毕,空一行  
+        hPos+=rowHeight;  
+        //合计  
+        LODOP.ADD_PRINT_TEXT(hPos,35,pageWidth,rowHeight,"合计:"+json.totalCount);  
+        //LODOP.ADD_PRINT_TEXT(hPos,75,pageWidth,rowHeight,"门市价（￥）"+json.total);
+        LODOP.ADD_PRINT_TEXT(hPos,75,pageWidth,rowHeight,"会员价（￥）"+jg);
+		hPos+=rowHeight;
+		LODOP.ADD_PRINT_TEXT(hPos,75,pageWidth,rowHeight,"实付款（￥）"+clf_money);
+          
+        //hPos+=rowHeight;  
+		//时间戳
+        //LODOP.ADD_PRINT_TEXT(hPos,2,pageWidth,rowHeight,(new Date()).toLocaleDateString()+" "+(new Date()).toLocaleTimeString())  
+        hPos+=rowHeight;  
+        LODOP.ADD_PRINT_TEXT(hPos,25,pageWidth,rowHeight,"谢谢惠顾,欢迎下次光临!"); 
+		hPos+=rowHeight;		
+		LODOP.ADD_PRINT_TEXT(hPos,1,pageWidth,rowHeight+30,"客户签名："); 
+			
+        //初始化打印页的规格  
+        LODOP.SET_PRINT_PAGESIZE(3,pageWidth,45,"XXXXX订单信息");  
+          
+    };    
+</script>  
+{include file="public/footer"}
+
